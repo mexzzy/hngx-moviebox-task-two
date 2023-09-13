@@ -1,17 +1,10 @@
 import { styled } from "styled-components";
 import Logo from "../components/Logo";
-import homeLogo from "../assets/images/Home.png";
-import videoLogo from "../assets/images/Movie Projector.png";
-import tvLogo from "../assets/images/TV Show.png";
-import calendarLogo from "../assets/images/Calendar.png";
-import logoutLogo from "../assets/images/Logout.png";
-import playerLogo from "../assets/images/play.png";
 import mainPoster from "../assets/images/mainPoster.png";
 import recPic from "../assets/images/Rectangle 37.png";
-import ticket from "../assets/images/Two Tickets.png";
-import menuIcon from "../assets/images/menu-alt-4.png";
-import listIcon from "../assets/images/List.png";
 import { AiFillPlayCircle, AiFillStar } from "react-icons/ai";
+import { ImTicket } from "react-icons/im";
+import {FiHome, FiVideo, FiTv, FiCalendar, FiList, FiLogOut, FiMenu } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 import { FiChevronDown } from "react-icons/fi";
@@ -25,25 +18,25 @@ export default function MoviePage() {
             <Logo />
           </LogoLayout>
           <MenuToggle>
-            <img src={menuIcon} alt="icon" />
+            <FiMenu />
           </MenuToggle>
           <Menu>
             <Link to="/">
               <MenuList>
-                <img src={homeLogo} alt="icons" />
+                <FiHome color="#454545" size={20}/>
                 <span>home</span>
               </MenuList>
             </Link>
             <MenuList>
-              <img src={videoLogo} alt="icons" />
+              <FiVideo color="#454545"  size={20}/>
               <span>movies</span>
             </MenuList>
             <MenuList>
-              <img src={tvLogo} alt="icons" />
+              <FiTv color="#454545" size={20}/>
               <span>TV series</span>
             </MenuList>
             <MenuList>
-              <img src={calendarLogo} alt="icons" />
+              <FiCalendar color="#454545"  size={20}/>
               <span>upcoming</span>
             </MenuList>
           </Menu>
@@ -57,7 +50,7 @@ export default function MoviePage() {
           <Logout>
             {" "}
             <MenuList>
-              <img src={logoutLogo} alt="icons" />
+              <FiLogOut color="#454545" size={20}/>
               <span>log out</span>
             </MenuList>
           </Logout>
@@ -134,13 +127,13 @@ export default function MoviePage() {
               <Right>
                 <div>
                   <button>
-                    <img src={ticket} alt="icon" />
+                  <ImTicket  size={20}/>
                     <span>see showtimes</span>
                   </button>
                 </div>
                 <div>
                   <button>
-                    <img src={listIcon} alt="icon" />
+                    <FiList size={20}/>
                     <span>More watch option</span>
                   </button>
                 </div>

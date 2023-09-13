@@ -1,14 +1,14 @@
 import { styled } from "styled-components";
-// import MainPost from "../assets/images/mainPoster.png";
 import tomatoe from "../assets/images/tomatoe.png";
 import imbd from "../assets/images/imbd.png";
-import play from "../assets/images/play.png";
-// import poster from "../assets/images/poster.png";
 import Nav from "../components/Nav";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { AiFillPlayCircle } from "react-icons/ai";
 import ClipLoader from "react-spinners/ClipLoader";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface movie {
   id: string;
@@ -28,8 +28,8 @@ interface posterMovie {
 export default function Main() {
   const [movies, setMovies] = useState<movie[]>([]);
   const [posterMovies, setPosterMovies] = useState<posterMovie[]>([]);
-  // const [error, setError] = useState(null);
-  // const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const apiKey =
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMTdkODE4YWNkYWQ4Yzk4N2RiNzAwYjVmZWY1MzRlNSIsInN1YiI6IjY0ZmU0MDdmMmRmZmQ4MDEzYmNjYTI2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B8qJEbFYrkV1aEADt_2dRpoFlq_3PC3X8-NB7phzOuU";
@@ -47,11 +47,11 @@ export default function Main() {
       .then((response) => {
         setMovies(response.data.results.slice(0, 10));
         console.log(response.data.results.slice(0, 10));
-        // setLoading(false);
+        setLoading(false);
       })
       .catch((error) => {
         // setError(error);
-        // setLoading(false);
+        setLoading(true);
         console.log(error);
       });
   }, []);
@@ -77,14 +77,25 @@ export default function Main() {
         console.log(error);
       });
   }, []);
-
   return (
     <>
+         <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <Wrapper>
         <DetailsFlex>
           <Nav />
           {posterMovies.map((index) => (
-            <Details>
+            <Details >
               <div>{index.original_title}</div>
               <div>
                 <div>
@@ -99,7 +110,7 @@ export default function Main() {
               <div>{index.overview}</div>
               <div>
                 <button>
-                  <img src={play} alt="icon" />
+                  <AiFillPlayCircle size={20} />
                   watch trailer
                 </button>
               </div>
@@ -113,37 +124,52 @@ export default function Main() {
       </TitleHolder>
 
       <MainMovieWrapper>
-        {movies.map((index) => (
-          <MovieContainer key={index.id} data-testid="movie-card">
-            <div>
-              <img
-                data-testid="movie-poster"
-                src={`https://image.tmdb.org/t/p/original/${index.poster_path}`}
-                alt="movie"
-              />
-            </div>
-            <div data-testid="movie-release-date">{index.release_date}</div>
-            <Link to={`/movie/${index.id}`}>
-              <div data-testid="movie-title">{index.title}</div>
-            </Link>
+        {loading ? (
+          <Loader>
+          <ClipLoader size={50} color="#be123c" aria-label="Loading Spinner" />
+          </Loader>
+        ) : (
+          <>
+            {movies.map((index) => (
+              <MovieContainer key={index.id} data-testid="movie-card">
+                <div>
+                  <img
+                    data-testid="movie-poster"
+                    src={`https://image.tmdb.org/t/p/original/${index.poster_path}`}
+                    alt="movie"
+                  />
+                </div>
+                <div data-testid="movie-release-date">{index.release_date}</div>
+                <Link to={`/movie/${index.id}`}>
+                  <div data-testid="movie-title">{index.title}</div>
+                </Link>
 
-            <FlexRate>
-              <div>
-                <img src={imbd} alt="icon" />
-                <span>{index.vote_average} / 87%</span>
-              </div>
-              <div>
-                <img src={tomatoe} alt="icon" />
-                <span>10%</span>
-              </div>
-            </FlexRate>
-            <div>Adventure</div>
-          </MovieContainer>
-        ))}
+                <FlexRate>
+                  <div>
+                    <img src={imbd} alt="icon" />
+                    <span>{index.vote_average} / 87%</span>
+                  </div>
+                  <div>
+                    <img src={tomatoe} alt="icon" />
+                    <span>10%</span>
+                  </div>
+                </FlexRate>
+                <div>Adventure</div>
+              </MovieContainer>
+            ))}
+          </>
+        )}
       </MainMovieWrapper>
     </>
   );
 }
+const Loader =styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30vh;
+    justify-content: center;
+`
 const Wrapper = styled.div`
   background-color: #000;
   background-position: center;
