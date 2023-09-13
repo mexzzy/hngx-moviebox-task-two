@@ -1,12 +1,13 @@
 import {styled} from "styled-components"
 import search from "../assets/images/search.png"
+import { FiSearch } from "react-icons/fi";
 
 export default function SearchInput(){
     return(
         <>
             <SearchWrapper>
                 <input type="text" placeholder="what do you want to watch"/>
-                <img src={search} alt="search"/>
+                <FiSearch/>
             </SearchWrapper>
         </>
     )

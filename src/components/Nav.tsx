@@ -1,7 +1,7 @@
-import menu from "../assets/images/menu-alt-4.png";
 import Logo from "./Logo";
 import SearchInput from "./SearchInput";
 import { styled } from "styled-components";
+import { FiMenu } from "react-icons/fi";
 
 export default function Nav() {
   return (
@@ -12,7 +12,7 @@ export default function Nav() {
           <SearchInput />
         </div>
         <div>
-          <span>sign in</span> <img src={menu} alt="menu" />
+          <span>sign in</span> <FiMenu />
         </div>
       </NavWrapper>
     </>
