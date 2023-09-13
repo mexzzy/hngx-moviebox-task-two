@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import MainPost from "../assets/images/mainPoster.png";
+// import MainPost from "../assets/images/mainPoster.png";
 import tomatoe from "../assets/images/tomatoe.png";
 import imbd from "../assets/images/imbd.png";
 import play from "../assets/images/play.png";
@@ -8,6 +8,7 @@ import Nav from "../components/Nav";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 interface movie {
   id: string;
@@ -110,34 +111,36 @@ export default function Main() {
         <div>featured movies </div>
         <span>See more</span>
       </TitleHolder>
-      <Link to="/Movie page">
-        <MainMovieWrapper>
-          {movies.map((index) => (
-            <MovieContainer key={index.id} data-testid="movie-card">
-              <div>
-                <img
-                  data-testid="movie-poster"
-                  src={`https://image.tmdb.org/t/p/original/${index.poster_path}`}
-                  alt="movie"
-                />
-              </div>
-              <div data-testid="movie-release-date">{index.release_date}</div>
+
+      <MainMovieWrapper>
+        {movies.map((index) => (
+          <MovieContainer key={index.id} data-testid="movie-card">
+            <div>
+              <img
+                data-testid="movie-poster"
+                src={`https://image.tmdb.org/t/p/original/${index.poster_path}`}
+                alt="movie"
+              />
+            </div>
+            <div data-testid="movie-release-date">{index.release_date}</div>
+            <Link to={`/movie/${index.id}`}>
               <div data-testid="movie-title">{index.title}</div>
-              <FlexRate>
-                <div>
-                  <img src={imbd} alt="icon" />
-                  <span>{index.vote_average} / 87%</span>
-                </div>
-                <div>
-                  <img src={tomatoe} alt="icon" />
-                  <span>10%</span>
-                </div>
-              </FlexRate>
-              <div>Adventure</div>
-            </MovieContainer>
-          ))}
-        </MainMovieWrapper>
-      </Link>
+            </Link>
+
+            <FlexRate>
+              <div>
+                <img src={imbd} alt="icon" />
+                <span>{index.vote_average} / 87%</span>
+              </div>
+              <div>
+                <img src={tomatoe} alt="icon" />
+                <span>10%</span>
+              </div>
+            </FlexRate>
+            <div>Adventure</div>
+          </MovieContainer>
+        ))}
+      </MainMovieWrapper>
     </>
   );
 }
