@@ -9,6 +9,7 @@ import { AiFillPlayCircle } from "react-icons/ai";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../components/Footer";
 
 interface movie {
   id: string;
@@ -84,16 +85,16 @@ export default function Main() {
   return (
     <>
       <ToastContainer
-        position="bottom-left"
         autoClose={5000}
         hideProgressBar={false}
-        newestOnTop={false}
+        position="bottom-left"
         closeOnClick
+        newestOnTop={false}
         rtl={false}
-        pauseOnFocusLoss
         draggable
-        pauseOnHover
+        pauseOnFocusLoss
         theme="dark"
+        pauseOnHover
       />
       {loading ? (
         <Loader>
@@ -181,6 +182,7 @@ export default function Main() {
           </>
         )}
       </MainMovieWrapper>
+      <Footer />
     </>
   );
 }
@@ -214,7 +216,7 @@ const Details = styled.div`
   padding: 2% 6%;
   color: #fff;
   @media (max-width: 768px) {
-    width: 100%;
+    width: 80%;
   }
 
   div:nth-child(1) {
