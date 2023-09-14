@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { AiFillPlayCircle } from "react-icons/ai";
 import ClipLoader from "react-spinners/ClipLoader";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface movie {
   id: string;
@@ -50,9 +50,14 @@ export default function Main() {
         setLoading(false);
       })
       .catch((error) => {
-        // setError(error);
+        setError(error);
+        toast.error("something went wrong");
         setLoading(true);
         console.log(error);
+        if (error.message === "Network Error") {
+          setLoading(true);
+          toast.info("Your device is not connected to the internet");
+        }
       });
   }, []);
 
@@ -72,14 +77,13 @@ export default function Main() {
         // setLoading(false);
       })
       .catch((error) => {
-        // setError(error);
-        // setLoading(false);
+        setLoading(true);
         console.log(error);
       });
   }, []);
   return (
     <>
-         <ToastContainer
+      <ToastContainer
         position="bottom-left"
         autoClose={5000}
         hideProgressBar={false}
@@ -91,33 +95,46 @@ export default function Main() {
         pauseOnHover
         theme="dark"
       />
-      <Wrapper>
-        <DetailsFlex>
-          <Nav />
+      {loading ? (
+        <Loader>
+          <ClipLoader size={50} color="#be123c" aria-label="Loading Spinner" />
+        </Loader>
+      ) : (
+        <>
           {posterMovies.map((index) => (
-            <Details >
-              <div>{index.original_title}</div>
-              <div>
-                <div>
-                  <img src={imbd} alt="icon" />
-                  <span>{index.vote_average}/100</span>
-                </div>
-                <div>
-                  <img src={tomatoe} alt="icon" />
-                  <span>97%</span>
-                </div>
-              </div>
-              <div>{index.overview}</div>
-              <div>
-                <button>
-                  <AiFillPlayCircle size={20} />
-                  watch trailer
-                </button>
-              </div>
-            </Details>
+            <Wrapper
+              style={{
+                backgroundImage: `url("https://image.tmdb.org/t/p/original${index.backdrop_path}")`,
+              }}
+            >
+              <DetailsFlex>
+                <Nav />
+                <Details>
+                  <div>{index.original_title}</div>
+                  <div>
+                    <div>
+                      <img src={imbd} alt="icon" />
+                      <span>{index.vote_average}/100</span>
+                    </div>
+                    <div>
+                      <img src={tomatoe} alt="icon" />
+                      <span>97%</span>
+                    </div>
+                  </div>
+                  <div>{index.overview}</div>
+                  <div>
+                    <button>
+                      <AiFillPlayCircle size={20} />
+                      watch trailer
+                    </button>
+                  </div>
+                </Details>
+              </DetailsFlex>
+            </Wrapper>
           ))}
-        </DetailsFlex>
-      </Wrapper>
+        </>
+      )}
+
       <TitleHolder>
         <div>featured movies </div>
         <span>See more</span>
@@ -126,7 +143,11 @@ export default function Main() {
       <MainMovieWrapper>
         {loading ? (
           <Loader>
-          <ClipLoader size={50} color="#be123c" aria-label="Loading Spinner" />
+            <ClipLoader
+              size={50}
+              color="#be123c"
+              aria-label="Loading Spinner"
+            />
           </Loader>
         ) : (
           <>
@@ -163,17 +184,16 @@ export default function Main() {
     </>
   );
 }
-const Loader =styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 30vh;
-    justify-content: center;
-`
+const Loader = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 30vh;
+  justify-content: center;
+`;
 const Wrapper = styled.div`
-  background-color: #000;
-  background-position: center;
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   height: 80vh;
   width: 100%;
