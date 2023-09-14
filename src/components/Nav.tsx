@@ -12,7 +12,10 @@ export default function Nav() {
           <SearchInput />
         </div>
         <div>
-          <span>sign in</span> <FiMenu />
+          <span>sign in</span>{" "}
+          <span>
+            <FiMenu />
+          </span>
         </div>
       </NavWrapper>
     </>
@@ -25,10 +28,12 @@ const NavWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1% 6%;
+  background-image: linear-gradient(#000000a9, transparent);
   @media (max-width: 768px) {
-    width: 100%;
+    width: 90%;
+    gap: 10px;
+    justify-content: flex-start;
   }
-
 
   div:nth-child(2) {
     border: 1px solid;
@@ -41,8 +46,16 @@ const NavWrapper = styled.div`
     align-items: center;
     gap: 10px;
     text-transform: capitalize;
+
+    span:nth-child(1) {
       @media (max-width: 768px) {
-        display :none;
+        display: none;
       }
+    }
+    span:nth-child(2) {
+      background: #be123c;
+      padding: 10px 10px 5px 10px;
+      border-radius: 20px;
+    }
   }
 `;
