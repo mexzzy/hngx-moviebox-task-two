@@ -25,9 +25,6 @@ const SearchWrapper = styled.div`
         font-size: 17px;
         color: #fff;
         width: 100%;
-    @media (max-width: 768px) {
-        width: 50%;
-    }
 
         &::placeholder{
             color: #fff;

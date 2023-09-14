@@ -7,7 +7,7 @@ export default function Nav() {
   return (
     <>
       <NavWrapper>
-        <Logo/>
+        <Logo />
         <div>
           <SearchInput />
         </div>
@@ -41,14 +41,8 @@ const NavWrapper = styled.div`
     align-items: center;
     gap: 10px;
     text-transform: capitalize;
-
-    img {
-      background: #be123c;
-      padding: 5px;
-      border-radius: 20px;
-    }
-    @media (max-width: 768px){
-        gap: 5px;
-    }
+      @media (max-width: 768px) {
+        display :none;
+      }
   }
 `;
