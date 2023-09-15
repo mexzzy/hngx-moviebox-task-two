@@ -161,7 +161,9 @@ export default function MoviePage() {
                   <div >
                     {" "}
                     {details ? (
-                      <div data-testid="movie-runtime">{details.runtime}m</div>
+                      <>
+                      <div data-testid="movie-runtime">{details.runtime}</div>m
+                      </>
                     ) : (
                       <>
                            {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
