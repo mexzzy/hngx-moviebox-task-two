@@ -27,6 +27,10 @@ interface posterMovie {
 }
 
 export default function Main() {
+  // const localDate = new Date(release_date); 
+// const utcDate = localDate.toISOString();
+// console.log(utcDate);
+
   const [movies, setMovies] = useState<movie[]>([]);
   const [posterMovies, setPosterMovies] = useState<posterMovie[]>([]);
   const [error, setError] = useState(null);
@@ -38,6 +42,7 @@ export default function Main() {
   useEffect(() => {
     const apiUrl = `https://api.themoviedb.org/3/movie/popular`;
 
+    setLoading(true);
     axios
       .get(apiUrl, {
         headers: {
@@ -155,11 +160,11 @@ export default function Main() {
             {movies.map((index) => (
               <MovieContainer key={index.id} data-testid="movie-card">
                 <div>
-                  <img
+                  <PosterImage
                     data-testid="movie-poster"
-                    src={`https://image.tmdb.org/t/p/original/${index.poster_path}`}
-                    alt="movie"
-                  />
+                    style={{backgroundImage: `url("https://image.tmdb.org/t/p/original/${index.poster_path}")`}}
+                      >
+                      </PosterImage>
                 </div>
                 <div data-testid="movie-release-date">{index.release_date}</div>
                 <Link to={`/movie/${index.id}`}>
@@ -284,18 +289,16 @@ const Details = styled.div`
 `;
 
 const MovieContainer = styled.div`
-  width: 200px;
+  width: 250px;
   display: flex;
   align-items: flex-start;
   gap: 5px;
+  /* border: 1px solid ; */
   flex-direction: column;
   text-transform: capitalize;
 
   div:nth-child(1) {
-    img {
-      width: 100%;
-      height: 300px;
-    }
+ width: 100%;
   }
   div:nth-child(2) {
     font-size: 12px;
@@ -310,6 +313,13 @@ const MovieContainer = styled.div`
     color: #888;
   }
 `;
+const  PosterImage = styled.div `
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 370px;
+  width: 100%;
+`
 const FlexRate = styled.div`
   display: flex;
   align-items: center;

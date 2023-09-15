@@ -1,15 +1,64 @@
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import Logo from "../components/Logo";
 import mainPoster from "../assets/images/mainPoster.png";
 import recPic from "../assets/images/Rectangle 37.png";
 import { AiFillPlayCircle, AiFillStar } from "react-icons/ai";
 import { ImTicket } from "react-icons/im";
-import {FiHome, FiVideo, FiTv, FiCalendar, FiList, FiLogOut, FiMenu } from "react-icons/fi";
+import {
+  FiHome,
+  FiVideo,
+  FiTv,
+  FiCalendar,
+  FiList,
+  FiLogOut,
+  FiMenu,
+} from "react-icons/fi";
 import { Link } from "react-router-dom";
-
 import { FiChevronDown } from "react-icons/fi";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+
+interface movieIdPass{
+  id: string;
+  backdrop_path: string;
+  release_date: string;
+  overview: string;
+  runtime: number;
+  vote_average: number;
+  vote_count: number;
+}
 
 export default function MoviePage() {
+
+  const [error, setError] = useState(null);
+  const [details, setDetails] = useState<movieIdPass[]>([]);
+
+  const { id } = useParams();
+
+  const apiKey = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMTdkODE4YWNkYWQ4Yzk4N2RiNzAwYjVmZWY1MzRlNSIsInN1YiI6IjY0ZmU0MDdmMmRmZmQ4MDEzYmNjYTI2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B8qJEbFYrkV1aEADt_2dRpoFlq_3PC3X8-NB7phzOuU";
+    
+  useEffect(() => {
+    const apiUrl = `https://api.themoviedb.org/3/movie/${id}`;
+    // setLoading(true);
+    axios
+      .get(apiUrl, {
+        headers: {
+          Accept: "application/json",
+          Authorization: apiKey,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setDetails(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+        // setLoading(true);
+        // console.log(error);
+      });
+  }, [id]);
+
   return (
     <>
       <MainLayoutFlex>
@@ -18,31 +67,32 @@ export default function MoviePage() {
             <Logo />
           </LogoLayout>
           <MenuToggle>
-            <FiMenu />
+            <FiMenu color="#fff" />
           </MenuToggle>
           <Menu>
             <Link to="/">
               <MenuList>
-                <FiHome color="#454545" size={20}/>
+                <FiHome color="#454545" size={20} />
                 <span>home</span>
               </MenuList>
             </Link>
             <MenuList>
-              <FiVideo color="#454545"  size={20}/>
+              <FiVideo color="#454545" size={20} />
               <span>movies</span>
             </MenuList>
             <MenuList>
-              <FiTv color="#454545" size={20}/>
+              <FiTv color="#454545" size={20} />
               <span>TV series</span>
             </MenuList>
             <MenuList>
-              <FiCalendar color="#454545"  size={20}/>
+              <FiCalendar color="#454545" size={20} />
               <span>upcoming</span>
             </MenuList>
           </Menu>
           <MessageBox>
             <span>Play movie quizes and earn free tickets</span>
             <span>50k people are playing now</span>
+            
             <div>
               <button>start playing</button>
             </div>
@@ -50,7 +100,7 @@ export default function MoviePage() {
           <Logout>
             {" "}
             <MenuList>
-              <FiLogOut color="#454545" size={20}/>
+              <FiLogOut color="#454545" size={20} />
               <span>log out</span>
             </MenuList>
           </Logout>
@@ -127,13 +177,13 @@ export default function MoviePage() {
               <Right>
                 <div>
                   <button>
-                  <ImTicket  size={20}/>
+                    <ImTicket size={20} />
                     <span>see showtimes</span>
                   </button>
                 </div>
                 <div>
                   <button>
-                    <FiList size={20}/>
+                    <FiList size={20} />
                     <span>More watch option</span>
                   </button>
                 </div>
@@ -271,7 +321,7 @@ const MainVideoDisplay = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
       height: 40vh;
     }
     span {
@@ -391,8 +441,8 @@ const CastDetails = styled.div`
     align-items: center;
     gap: 10px;
     text-transform: capitalize;
-    @media (max-width: 768px){
-    align-items: flex-start;
+    @media (max-width: 768px) {
+      align-items: flex-start;
     }
 
     span:nth-child(1) {
