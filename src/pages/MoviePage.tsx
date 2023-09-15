@@ -31,10 +31,12 @@ interface movieIdPass {
   vote_count: number;
 }
 
+
 export default function MoviePage() {
   const [error, setError] = useState(null);
   const [details, setDetails] = useState<movieIdPass | null>(null);
   const [loading, setLoading] = useState(false);
+  // const [movieCreditsData, setMovieCreditsData] = useState<MovieCreditsResponse | null>(null);
 
   const { id } = useParams();
 
@@ -52,7 +54,6 @@ export default function MoviePage() {
         },
       })
       .then((response) => {
-      
         setDetails(response.data);
         setLoading(false);
       })
@@ -110,63 +111,89 @@ export default function MoviePage() {
         </LeftLayout>
         <RightLayout>
           <MainVideoDisplay>
-           {details ? (
-           <div
-             style={{
-               backgroundImage: `url("https://image.tmdb.org/t/p/original${details.backdrop_path}")`,
-             }}
-            >
-              <span>
-                <AiFillPlayCircle size={50} />
-                <p>watch trailer</p>
-              </span>
-            </div>
-            ): (
-            <>
-            <Loader>
-             {loading && ( <ClipLoader size={50} color="#be123c" aria-label="Loading Spinner" />)}
-             </Loader>
-             </>
-              )}
+            {details ? (
+              <div
+                style={{
+                  backgroundImage: `url("https://image.tmdb.org/t/p/original${details.backdrop_path}")`,
+                }}
+              >
+                <span>
+                  <AiFillPlayCircle size={50} />
+                  <p>watch trailer</p>
+                </span>
+              </div>
+            ) : (
+              <>
+                <Loader>
+                  {loading && (
+                    <ClipLoader
+                      size={50}
+                      color="#be123c"
+                      aria-label="Loading Spinner"
+                    />
+                  )}
+                </Loader>
+              </>
+            )}
           </MainVideoDisplay>
           <All>
             <AboutVideoFlex>
               <Box1>
                 <div>
-                  <div
-                   
-                    style={{ textTransform: "capitalize" }}
-                  >
+                  <div style={{ textTransform: "capitalize" }}>
                     {details ? (
-                      <div  data-testid="movie-title">{details.original_title}</div>
+                      <div data-testid="movie-title">
+                        {details.original_title}
+                      </div>
                     ) : (
                       <>
-                        {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                        {loading && (
+                          <ClipLoader
+                            size={10}
+                            color="#be123c"
+                            aria-label="Loading Spinner"
+                          />
+                        )}
                       </>
                     )}
                   </div>
                   <span></span>
-                  <div >
+                  <div>
                     {details ? (
-                      <div data-testid="movie-release-date">{details.release_date}</div>
+                      <div data-testid="movie-release-date">
+                        {details.release_date}
+                      </div>
                     ) : (
                       <>
-                           {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                        {loading && (
+                          <ClipLoader
+                            size={10}
+                            color="#be123c"
+                            aria-label="Loading Spinner"
+                          />
+                        )}
                       </>
                     )}
                   </div>
                   <span></span>
                   <div>PG-13</div>
                   <span></span>
-                  <div >
+                  <div>
                     {" "}
                     {details ? (
                       <>
-                      <div data-testid="movie-runtime">{details.runtime}</div>m
+                        <div data-testid="movie-runtime">{details.runtime}</div>
+                        m
                       </>
                     ) : (
                       <>
-                           {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                        {loading && (
+                          <ClipLoader
+                            size={10}
+                            color="#be123c"
+                            aria-label="Loading Spinner"
+                          />
+                        )}
                       </>
                     )}
                   </div>
@@ -181,7 +208,13 @@ export default function MoviePage() {
                     <>{details.vote_average}</>
                   ) : (
                     <>
-                         {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                      {loading && (
+                        <ClipLoader
+                          size={10}
+                          color="#be123c"
+                          aria-label="Loading Spinner"
+                        />
+                      )}
                     </>
                   )}
                 </span>
@@ -191,7 +224,13 @@ export default function MoviePage() {
                     <>{details.vote_count}</>
                   ) : (
                     <>
-                         {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                      {loading && (
+                        <ClipLoader
+                          size={10}
+                          color="#be123c"
+                          aria-label="Loading Spinner"
+                        />
+                      )}
                     </>
                   )}
                 </span>
@@ -200,12 +239,18 @@ export default function MoviePage() {
             <MoreDetails>
               <Left>
                 <OverView>
-                  <div >
+                  <div>
                     {details ? (
                       <div data-testid="movie-overview">{details.overview}</div>
                     ) : (
                       <>
-                          {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                        {loading && (
+                          <ClipLoader
+                            size={10}
+                            color="#be123c"
+                            aria-label="Loading Spinner"
+                          />
+                        )}
                       </>
                     )}
                   </div>
@@ -222,7 +267,9 @@ export default function MoviePage() {
                   </div>
                   <div>
                     <span>stars:</span>
-                    <span>samuel meshach, joseph ebuka, micheal, daniel</span>
+                    <span>
+                    samuel meshach, joseph ebuka, micheal, daniel
+                    </span>
                   </div>
                 </CastDetails>
 
