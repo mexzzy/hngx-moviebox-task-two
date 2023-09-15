@@ -272,7 +272,6 @@ const LeftLayout = styled.div`
   display: flex;
   gap: 10px;
   border-radius: 0 30px 30px 0;
-  overflow-y: scroll;
   flex-direction: column;
   @media (max-width: 768px) {
     width: fit-content;
