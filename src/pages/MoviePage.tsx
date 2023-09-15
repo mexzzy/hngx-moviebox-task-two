@@ -18,10 +18,12 @@ import { Link } from "react-router-dom";
 import { FiChevronDown } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
-interface movieIdPass{
+interface movieIdPass {
   id: string;
   backdrop_path: string;
+  original_title: string;
   release_date: string;
   overview: string;
   runtime: number;
@@ -30,17 +32,18 @@ interface movieIdPass{
 }
 
 export default function MoviePage() {
-
   const [error, setError] = useState(null);
-  const [details, setDetails] = useState<movieIdPass[]>([]);
+  const [details, setDetails] = useState<movieIdPass | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const { id } = useParams();
 
-  const apiKey = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMTdkODE4YWNkYWQ4Yzk4N2RiNzAwYjVmZWY1MzRlNSIsInN1YiI6IjY0ZmU0MDdmMmRmZmQ4MDEzYmNjYTI2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B8qJEbFYrkV1aEADt_2dRpoFlq_3PC3X8-NB7phzOuU";
-    
+  const apiKey =
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMTdkODE4YWNkYWQ4Yzk4N2RiNzAwYjVmZWY1MzRlNSIsInN1YiI6IjY0ZmU0MDdmMmRmZmQ4MDEzYmNjYTI2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B8qJEbFYrkV1aEADt_2dRpoFlq_3PC3X8-NB7phzOuU";
+
   useEffect(() => {
     const apiUrl = `https://api.themoviedb.org/3/movie/${id}`;
-    // setLoading(true);
+    setLoading(true);
     axios
       .get(apiUrl, {
         headers: {
@@ -49,13 +52,13 @@ export default function MoviePage() {
         },
       })
       .then((response) => {
-        console.log(response.data);
+      
         setDetails(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         setError(error);
-        // setLoading(true);
-        // console.log(error);
+        setLoading(true);
       });
   }, [id]);
 
@@ -92,7 +95,7 @@ export default function MoviePage() {
           <MessageBox>
             <span>Play movie quizes and earn free tickets</span>
             <span>50k people are playing now</span>
-            
+
             <div>
               <button>start playing</button>
             </div>
@@ -107,45 +110,102 @@ export default function MoviePage() {
         </LeftLayout>
         <RightLayout>
           <MainVideoDisplay>
-            <div>
+           {details ? (
+           <div
+             style={{
+               backgroundImage: `url("https://image.tmdb.org/t/p/original${details.backdrop_path}")`,
+             }}
+            >
               <span>
                 <AiFillPlayCircle size={50} />
                 <p>watch trailer</p>
               </span>
             </div>
+            ): (
+            <>
+            <Loader>
+             {loading && ( <ClipLoader size={50} color="#be123c" aria-label="Loading Spinner" />)}
+             </Loader>
+             </>
+              )}
           </MainVideoDisplay>
           <All>
             <AboutVideoFlex>
               <Box1>
                 <div>
-                  <div style={{ textTransform: "capitalize" }}>
-                    top gun : maverick
+                  <div
+                   
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    {details ? (
+                      <div  data-testid="movie-title">{details.original_title}</div>
+                    ) : (
+                      <>
+                        {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                      </>
+                    )}
                   </div>
                   <span></span>
-                  <div>2022</div>
+                  <div >
+                    {details ? (
+                      <div data-testid="movie-release-date">{details.release_date}</div>
+                    ) : (
+                      <>
+                           {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                      </>
+                    )}
+                  </div>
                   <span></span>
                   <div>PG-13</div>
                   <span></span>
-                  <div>2h 10m</div>
+                  <div >
+                    {" "}
+                    {details ? (
+                      <div data-testid="movie-runtime">{details.runtime}m</div>
+                    ) : (
+                      <>
+                           {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                      </>
+                    )}
+                  </div>
                   <p>action</p>
                   <p>drama</p>
                 </div>
               </Box1>
               <Box2>
                 <AiFillStar color="yellow" />
-                <span>8.5</span>
+                <span>
+                  {details ? (
+                    <>{details.vote_average}</>
+                  ) : (
+                    <>
+                         {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                    </>
+                  )}
+                </span>
                 <span>|</span>
-                <span>78k</span>
+                <span>
+                  {details ? (
+                    <>{details.vote_count}</>
+                  ) : (
+                    <>
+                         {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                    </>
+                  )}
+                </span>
               </Box2>
             </AboutVideoFlex>
             <MoreDetails>
               <Left>
                 <OverView>
-                  <div>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab
-                    atque quia placeat assumenda repellat nesciunt aut excepturi
-                    suscipit. Iste maiores debitis itaque, veritatis consectetur
-                    rerum exercitationem explicabo reiciendis blanditiis alias.
+                  <div >
+                    {details ? (
+                      <div data-testid="movie-overview">{details.overview}</div>
+                    ) : (
+                      <>
+                          {loading && ( <ClipLoader size={10} color="#be123c" aria-label="Loading Spinner" />)}
+                      </>
+                    )}
                   </div>
                 </OverView>
 
@@ -481,4 +541,11 @@ const Line = styled.div`
   div:nth-child(2) {
     padding-right: 10px;
   }
+`;
+const Loader = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 30vh;
+  justify-content: center;
 `;
