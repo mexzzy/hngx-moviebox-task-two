@@ -27,9 +27,7 @@ interface posterMovie {
 }
 
 export default function Main() {
-  // const localDate = new Date(release_date); 
-// const utcDate = localDate.toISOString();
-// console.log(utcDate);
+
 
   const [movies, setMovies] = useState<movie[]>([]);
   const [posterMovies, setPosterMovies] = useState<posterMovie[]>([]);
@@ -52,14 +50,12 @@ export default function Main() {
       })
       .then((response) => {
         setMovies(response.data.results.slice(0, 10));
-        console.log(response.data.results.slice(0, 10));
         setLoading(false);
       })
       .catch((error) => {
         setError(error);
         toast.error("something went wrong");
         setLoading(true);
-        console.log(error);
         if (error.message === "Network Error") {
           setLoading(true);
           toast.info("Your device is not connected to the internet");
