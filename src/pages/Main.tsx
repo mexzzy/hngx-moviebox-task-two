@@ -38,7 +38,7 @@ export default function Main() {
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMTdkODE4YWNkYWQ4Yzk4N2RiNzAwYjVmZWY1MzRlNSIsInN1YiI6IjY0ZmU0MDdmMmRmZmQ4MDEzYmNjYTI2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B8qJEbFYrkV1aEADt_2dRpoFlq_3PC3X8-NB7phzOuU";
 
   useEffect(() => {
-    const apiUrl = `https://api.themoviedb.org/3/movie/popular`;
+    const apiUrl = `https://api.themoviedb.org/3/movie/top_rated`;
 
     setLoading(true);
     axios
@@ -64,7 +64,7 @@ export default function Main() {
   }, []);
 
   useEffect(() => {
-    const apiUrlTop = `https://api.themoviedb.org/3/movie/top_rated`;
+    const apiUrlTop = `https://api.themoviedb.org/3/movie/popular`;
 
     axios
       .get(apiUrlTop, {
