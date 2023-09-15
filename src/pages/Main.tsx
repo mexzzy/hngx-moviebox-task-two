@@ -75,12 +75,10 @@ export default function Main() {
       })
       .then((response) => {
         setPosterMovies(response.data.results.slice(0, 1));
-        console.log(response.data.results.slice(0, 1));
         // setLoading(false);
       })
       .catch((error) => {
         setLoading(true);
-        console.log(error);
       });
   }, []);
   return (
