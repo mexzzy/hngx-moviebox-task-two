@@ -151,8 +151,8 @@ export default function Main() {
         ) : (
           <>
             {movies.map((index) => (
-              <MovieContainer key={index.id} data-testid="movie-card">
                 <Link to={`/movie/${index.id}`}>
+              <MovieContainer key={index.id} data-testid="movie-card">
                 <div>
                   <PosterImage
                     data-testid="movie-poster"
@@ -162,7 +162,6 @@ export default function Main() {
                 </div>
                 <div data-testid="movie-release-date">{index.release_date}</div>
                   <div data-testid="movie-title">{index.title}</div>
-                </Link>
 
                 <FlexRate>
                   <div>
@@ -176,6 +175,7 @@ export default function Main() {
                 </FlexRate>
                 <div>Adventure</div>
               </MovieContainer>
+                </Link>
             ))}
           </>
         )}
